@@ -1,4 +1,4 @@
-import { convertPLNToUSD } from '../convertPLNtoUSD';
+import { convertPLNToUSD } from './../convertPLNtoUSD';
 
 describe('ConvertPLNtoUSD', () => {
   it('should return proper value when good input', () => {
@@ -9,8 +9,22 @@ describe('ConvertPLNtoUSD', () => {
   });
   it('should return NaN when input is text', () => {
     expect(convertPLNToUSD('6')).toBeNaN();
-    expect(convertPLNToUSD('abc')).toBeNaN();
-    expect(convertPLNToUSD('-543')).toBeNaN();
+    expect(convertPLNToUSD('1abc')).toBeNaN();
+    expect(convertPLNToUSD('-3232')).toBeNaN();
   });
-});
+  it('should return NaN when input is empty', () => {
+    expect(convertPLNToUSD()).toBeNaN();
+  });
+  it('Should return "Error" when input is not eaither string or number', () =>{
+    expect(convertPLNToUSD({})).toBe('Error')
+    expect(convertPLNToUSD([])).toBe('Error')
+    expect(convertPLNToUSD(function() {})).toBe('Error')
+  });
+  it('should return "0" when input is lower than "0"', () => {
+    expect(convertPLNToUSD(-1)).toBe('$0.00')
+    expect(convertPLNToUSD(-10.1)).toBe('$0.00')
+    expect(convertPLNToUSD(-5)).toBe('$0.00')
+    expect(convertPLNToUSD(-1000)).toBe('$0.00')
+  })
 
+});
